@@ -1,0 +1,18 @@
+#!/usr/bin/env python3
+
+import socket
+import datetime
+
+HOST = ''
+PORT = 1560
+
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    s.bind((HOST, PORT))
+    s.listen()
+    print('Сервер запущен и готов к работе')
+    while True:
+        conn, addr = s.accept()
+        with conn:
+            print('Подключение от', addr)
+            current_time = datetime.datetime.now().strftime('%d.%m.%Y %H:%M')
+            conn.sendall(current_time.encode())
